@@ -2,9 +2,7 @@ import os
 import argparse
 import glob
 import torch
-from torch.backends import cudnn
 import torchvision.transforms as transforms
-from torch.utils.data import Dataset, DataLoader
 from model import Net
 from PIL import Image
 
@@ -20,13 +18,12 @@ def main(config):
 
     model = Net().to(device)
 
-    state = torch.load(config.ckp_path)
+    state = torch.load(config.model_path)
     model.load_state_dict(state['state_dict'])
 
     filenames = glob.glob(os.path.join(config.img_dir, '*.png'))
     filenames = sorted(filenames)
-    out_filename = os.path.join(config.save_dir, 'test_pred.csv')
-    os.makedirs(config.save_dir, exist_ok=True)
+    out_filename = config.save_dir
     model.eval()
     with open(out_filename, 'w') as out_file:
         out_file.write('image_id,label\n')
@@ -35,8 +32,7 @@ def main(config):
                 data = Image.open(fn)
                 data = transform(data)
                 data = torch.unsqueeze(data, 0)
-                data = data.to(device)
-                output = model(data)
+                output = model(data.to(device))
                 pred = output.max(1, keepdim=True)[1]
                 out_file.write(fn.split('/')[-1] + ',' + str(pred.item()) + '\n')
 
@@ -44,9 +40,9 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
     # Training configuration.
-    parser.add_argument('--img_dir', type=str, default='../hw2_data/p1_data/val_50')
+    parser.add_argument('--img_dir', type=str, default='./hw1_data/p1_data/val_50')
     parser.add_argument('--save_dir', type=str, default='../')
-    parser.add_argument('--model_path', default='../hw2_1_model.pkl', type=str, help='Checkpoint path.')
+    parser.add_argument('--model_path', default='./model2500.pth', type=str, help='Checkpoint path.')
     
     config = parser.parse_args()
     print(config)

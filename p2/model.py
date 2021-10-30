@@ -1,7 +1,5 @@
 import torch.nn as nn
-import torch.nn.functional as F
 import torchvision.models as models
-import torch
 
 
 class FCN32s(nn.Module):

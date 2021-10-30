@@ -1,9 +1,7 @@
 import glob
 import os
 from PIL import Image
-from os import listdir,walk
-from os.path import join
-from torch.utils.data import Dataset, DataLoader
+from torch.utils.data import Dataset
 
 
 class IMAGE(Dataset):

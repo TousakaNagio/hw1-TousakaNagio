@@ -1,7 +1,6 @@
 import os
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 from model import*
 # from torchvision.models import FCN16s, FCN32s, FCN8s
