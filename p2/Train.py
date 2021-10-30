@@ -122,3 +122,5 @@ class Train(object):
         print('mean_iou: %f' % mean_iou)
 
         return val_loss, mean_iou
+
+# reference: https://github.com/kai860115/DLCV2020-FALL/blob/main/hw2/semantic_segmentation/dataset.py

@@ -55,3 +55,5 @@ class Dataset(Dataset):
             sat = self.transform(sat)
 
         return sat, mask_target(mask)
+
+# reference: https://github.com/kai860115/DLCV2020-FALL/blob/main/hw2/semantic_segmentation/dataset.py

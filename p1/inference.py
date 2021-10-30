@@ -47,3 +47,5 @@ if __name__ == '__main__':
     config = parser.parse_args()
     print(config)
     main(config)
+
+# reference: https://github.com/kai860115/DLCV2020-FALL/blob/main/hw2/image_classification/test.py
