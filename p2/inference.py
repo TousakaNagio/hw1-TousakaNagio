@@ -26,13 +26,6 @@ def main(config):
 
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
-    # if config.model_type == 'DeepLabv3_ResNet50':
-    #     model = DeepLabv3_ResNet50().to(device)
-    # else:
-    #     model = FCN32s().to(device)
-    # # elif config.model_type == 'DeepLabv3_Resnet50':
-    # #     model = DeepLabv3_ResNet50().to(device)
-
     model = DeepLabv3_ResNet50().to(device)
 
     state = torch.load(config.model_path)
@@ -48,8 +41,7 @@ def main(config):
         for fn in filenames:
             ImageID = fn.split('/')[-1].split('_')[0]
             output_filename = os.path.join(config.save_dir, '{}_mask.png'.format(ImageID))  
-            data = Image.open(fn)
-            data = transform(data)
+            data = transform(Image.open(fn))
             data_shape = data.shape
             data = torch.unsqueeze(data, 0)
             data = data.to(device)
@@ -65,15 +57,10 @@ def main(config):
             y.save(output_filename)
 
 
-
-
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-
-    # Training configuration.
     parser.add_argument('--img_dir', type=str, default='../hw1_data/p2_data/validation')
     parser.add_argument('--save_dir', type=str, default='../output')
-    # parser.add_argument('--model_type', default='DeepLabv3_ResNet50', type=str, help='Model type')
     parser.add_argument('--model_path', default='../ckpt/p2_model_resnet50.ckpt', type=str, help='Checkpoint path.')
     
 
